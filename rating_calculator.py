@@ -3,14 +3,15 @@ import datetime
 import math
 import sys
 
+
 def time_parser(time: str):
     year, month, day = time.split("-")
     return int(year), int(month), int(day.split("T")[0])
 
+
 def is_in_period(year, month, day, period):
     now = datetime.datetime.now()
-    last = now + datetime.timedelta(weeks = -period*4)
-    # print(last)
+    last = now + datetime.timedelta(weeks=-period*4)
     if year > last.year:
         return True
     elif year < last.year:
@@ -24,18 +25,19 @@ def is_in_period(year, month, day, period):
     else:
         return False
 
+
 def calculate_rating(rated_contests, period):
     sm = 0
     bunbo = 0
     for i in range(len(rated_contests)):
         performance = rated_contests[i][3]
-        # print(performance)
-        sm += math.pow(2,performance/800)*math.pow(0.9,i+1)
-        bunbo += math.pow(0.9,i+1)
+        sm += math.pow(2, performance/800)*math.pow(0.9, i+1)
+        bunbo += math.pow(0.9, i+1)
     rating = 800 * math.log(sm/bunbo, 2)
     print(f"period = {period} month")
     print(f"rated contest num = {len(rated_contests)}")
     print(f"rating = {rating}")
+
 
 def main():
     user_name = sys.argv[1]
@@ -54,9 +56,7 @@ def main():
         print("no rated contest")
         exit(0)
     calculate_rating(rated_contests, period)
-    
 
-        
 
 if __name__ == "__main__":
     main()
